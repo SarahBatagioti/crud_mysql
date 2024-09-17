@@ -77,11 +77,25 @@ con.connect(function(erro) {
     */
 
     // fazer a ligação com join
+    /*
     var sql = "SELECT c.nome, p.produto, p.quantidade, p.valor_unitario FROM clientes c INNER JOIN pedidos p ON c.id = p.cliente_id"
     con.query(sql, function (erro, result) {
         if (erro) throw erro
         console.log("Combinação feita!")
         console.log(result)
-    }) 
+    }) */
+   
+    
+        // Criar tabela de fornecedores
+    var sqlFornecedor = "CREATE TABLE IF NOT EXISTS Fornecedor (" +
+    "id INT NOT NULL AUTO_INCREMENT, " +
+    "nome VARCHAR(255) NOT NULL, " +
+    "PRIMARY KEY(id))";
+
+    con.query(sqlFornecedor, function(erro, result) {
+        if (erro) throw erro;
+        console.log("Tabela Fornecedor criada!");
+    });
+    
 
 })
