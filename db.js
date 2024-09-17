@@ -27,8 +27,8 @@ con.connect(function(erro) {
     con.query(sql, function (erro, result) {
         if (erro) throw erro
         console.log("Tabela criada")
-    }) 
-    */
+    }) */
+    
 
     // inserir dados
     /*
@@ -73,8 +73,8 @@ con.connect(function(erro) {
     con.query(sql, function (erro, result) {
         if (erro) throw erro
         console.log("Tabela criada")
-    }) 
-    */
+    }) */
+    
 
     // fazer a ligação com join
     /*
@@ -96,12 +96,11 @@ con.connect(function(erro) {
     con.query(sqlFornecedor, function(erro, result) {
         if (erro) throw erro
         console.log("Tabela Fornecedor criada!")
-    });
-    */
-
-
-    /*
+    }); */
+    
+    
     // Criar tabela de produtos
+    /*
     var sqlProduto = "CREATE TABLE IF NOT EXISTS Produto (" +
     "id INT NOT NULL AUTO_INCREMENT, " +
     "nome VARCHAR(255) NOT NULL, " +
@@ -113,33 +112,57 @@ con.connect(function(erro) {
     con.query(sqlProduto, function(erro, result) {
         if (erro) throw erro
         console.log("Tabela Produto criada!")
-    }) 
+    }) */
     
-    */
-
+    
+    
     // Contar quantos produtos cada fornecedor fornece
-    var sqlCountProducts = "SELECT f.nome AS fornecedor, COUNT(p.id) AS total_produtos " +
+    var contarProduto = "SELECT f.nome AS fornecedor, COUNT(p.id) AS total_produtos " +
         "FROM Fornecedor f " +
         "LEFT JOIN Produto p ON f.id = p.fornecedor_id " +
         "GROUP BY f.id"
     
-    con.query(sqlCountProducts, function(erro, result) {
+    con.query(contarProduto, function(erro, result) {
         if (erro) throw erro;
         console.log("Total de produtos por fornecedor:")
         console.log(result)
     });
 
     // Listar produtos com preço acima de um valor, mostrando o fornecedor
-    var precoMinimo = 50.00; // Valor mínimo para filtro
-    var sqlProdutosAcimaPreco = "SELECT p.nome AS produto, p.preco, f.nome AS fornecedor " +
+    var precoMinimo = 10; // Valor mínimo para filtro
+    var produtoAcima = "SELECT p.nome AS produto, p.preco, f.nome AS fornecedor " +
         "FROM Produto p " +
         "INNER JOIN Fornecedor f ON p.fornecedor_id = f.id " +
         "WHERE p.preco > ?";
     
-    con.query(sqlProdutosAcimaPreco, [precoMinimo], function(erro, result) {
+    con.query(produtoAcima, [precoMinimo], function(erro, result) {
         if (erro) throw erro;
         console.log(`Produtos com preço acima de ${precoMinimo}:`);
         console.log(result);
     });
 
+    /*
+    // inserir dados fornecedor
+    var inserirFornecedor = "INSERT INTO Fornecedor (nome) VALUES " +
+    "('Sarah'), " +
+    "('Eric'), " +
+    "('Karen'), " +
+    "('Marianne'), " +
+    "('Alinne')";
+    con.query(inserirFornecedor, function (erro, result){
+        if (erro) throw erro
+        console.log("Registro inserido") 
+    })
+
+    //inserir dados 
+    var inserirProduto = "INSERT INTO Produto (nome, preco, fornecedor_id) VALUES " +
+    "('Pão', 60, 1), " +
+    "('Mortadela', 30, 1), " +
+    "('Queijo', 100, 2), " +
+    "('Manteiga', 75, 1), " +
+    "('Bala', 7, 2);";
+    con.query(inserirFornecedor, function (erro, result){
+        if (erro) throw erro
+        console.log("Registro inserido") 
+    })*/
 })
