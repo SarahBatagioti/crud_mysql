@@ -129,4 +129,17 @@ con.connect(function(erro) {
         console.log(result)
     });
 
+    // Listar produtos com preço acima de um valor, mostrando o fornecedor
+    var precoMinimo = 50.00; // Valor mínimo para filtro
+    var sqlProdutosAcimaPreco = "SELECT p.nome AS produto, p.preco, f.nome AS fornecedor " +
+        "FROM Produto p " +
+        "INNER JOIN Fornecedor f ON p.fornecedor_id = f.id " +
+        "WHERE p.preco > ?";
+    
+    con.query(sqlProdutosAcimaPreco, [precoMinimo], function(erro, result) {
+        if (erro) throw erro;
+        console.log(`Produtos com preço acima de ${precoMinimo}:`);
+        console.log(result);
+    });
+
 })
