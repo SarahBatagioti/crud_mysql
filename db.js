@@ -86,16 +86,47 @@ con.connect(function(erro) {
     }) */
    
     
-        // Criar tabela de fornecedores
+    // Criar tabela de fornecedores
+    /*
     var sqlFornecedor = "CREATE TABLE IF NOT EXISTS Fornecedor (" +
     "id INT NOT NULL AUTO_INCREMENT, " +
     "nome VARCHAR(255) NOT NULL, " +
-    "PRIMARY KEY(id))";
+    "PRIMARY KEY(id))"
 
     con.query(sqlFornecedor, function(erro, result) {
-        if (erro) throw erro;
-        console.log("Tabela Fornecedor criada!");
+        if (erro) throw erro
+        console.log("Tabela Fornecedor criada!")
     });
+    */
+
+
+    /*
+    // Criar tabela de produtos
+    var sqlProduto = "CREATE TABLE IF NOT EXISTS Produto (" +
+    "id INT NOT NULL AUTO_INCREMENT, " +
+    "nome VARCHAR(255) NOT NULL, " +
+    "preco DECIMAL(10, 2) NOT NULL, " +
+    "fornecedor_id INT, " +
+    "PRIMARY KEY(id), " +
+    "FOREIGN KEY (fornecedor_id) REFERENCES Fornecedor(id))"
+
+    con.query(sqlProduto, function(erro, result) {
+        if (erro) throw erro
+        console.log("Tabela Produto criada!")
+    }) 
     
+    */
+
+    // Contar quantos produtos cada fornecedor fornece
+    var sqlCountProducts = "SELECT f.nome AS fornecedor, COUNT(p.id) AS total_produtos " +
+        "FROM Fornecedor f " +
+        "LEFT JOIN Produto p ON f.id = p.fornecedor_id " +
+        "GROUP BY f.id"
+    
+    con.query(sqlCountProducts, function(erro, result) {
+        if (erro) throw erro;
+        console.log("Total de produtos por fornecedor:")
+        console.log(result)
+    });
 
 })
